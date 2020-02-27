@@ -1,0 +1,2753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#fff"/>
+    <title>IST Calendar</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/timetables.css" type="text/css">
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/jquery.ajax-cross-origin.min.js"></script>
+</head>
+<body>
+
+<div class="form-group">
+    <label for="academicTerms">Choose a academic term:</label>
+    <select id="academicTerms" name="academicTerms" class="form-control"></select>
+    <button class="btn btn-primary" onclick="getDegrees()">Confirm academic term</button>
+</div>
+
+<div class="form-group">
+    <label for="degrees">Choose a degree:</label>
+    <select id="degrees" name="degrees" class="form-control"></select>
+    <button class="btn btn-primary" onclick="getCourses()">Confirm degree</button>
+</div>
+
+<div class="form-group">
+    <label for="courses">Choose a degree:</label>
+    <select id="courses" name="courses" multiple class="form-control" style="height: 40vh"></select>
+    <button class="btn btn-primary" onclick="getSchedules()">Confirm courses</button>
+</div>
+
+<main class="col-sm-12" style="padding-top: 0">
+    <div id="main-content-wrapper" style="min-height: 600px">
+
+        <div class="col-md-10">
+
+
+            <table id="allTimesTable" class="timetable" cellspacing="0" cellpadding="0" width="90%">
+                <tbody>
+                <tr>
+                    <th>Horas/Dias</th>
+                    <th colspan="1" width="14%" id="weekday0">
+                        Segunda
+                    </th>
+                    <th colspan="1" width="14%" id="weekday1">
+                        Terça
+                    </th>
+                    <th colspan="1" width="14%" id="weekday2">
+                        Quarta
+                    </th>
+                    <th colspan="1" width="14%" id="weekday3">
+                        Quinta
+                    </th>
+                    <th colspan="1" width="14%" id="weekday4">
+                        Sexta
+                    </th>
+                    <th colspan="1" width="14%" id="weekday5">
+                        Sábado
+                    </th>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="8:00">8:00-8:30</th>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour1">8:30-9:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour2">9:00-9:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour3">9:30-10:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour4">10:00-10:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour5">10:30-11:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour6">11:00-11:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour7">11:30-12:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour8">12:00-12:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour9">12:30-13:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour10">13:00-13:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour11">13:30-14:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour12">14:00-14:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour13">14:30-15:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour14">15:00-15:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour15">15:30-16:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour16">16:00-16:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour17">16:30-17:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour18">17:00-17:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour19">17:30-18:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour20">18:00-18:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour21">18:30-19:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour22">19:00-19:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour23">19:30-20:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <table class="timetable" cellspacing="0" cellpadding="0" width="90%">
+                <tbody>
+                <tr>
+                    <th>Horas/Dias</th>
+                    <th colspan="1" width="14%" id="weekday0">
+                        Segunda
+                    </th>
+                    <th colspan="1" width="14%" id="weekday1">
+                        Terça
+                    </th>
+                    <th colspan="2" width="14%" id="weekday2">
+                        Quarta
+                    </th>
+                    <th colspan="2" width="14%" id="weekday3">
+                        Quinta
+                    </th>
+                    <th colspan="2" width="14%" id="weekday4">
+                        Sexta
+                    </th>
+                    <th colspan="1" width="14%" id="weekday5">
+                        Sábado
+                    </th>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour0">8:00-8:30</th>
+
+                    <td class="period-empty-slot">&nbsp;</td>
+
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour0" class="period-first-slot" title="08:00-09:30
+                    2020-02-18
+                    2020-03-03
+                    2020-03-10
+                    2020-03-17
+                    2020-03-24
+                    2020-03-31
+                    2020-04-14
+                    2020-04-21
+                    2020-04-28
+                    2020-05-05
+                    2020-05-12
+                    2020-05-19
+                    2020-05-26">
+                        <span class="float-left"><!-- NO_CHECKSUM -->
+                            <a href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(L)&nbsp;LAB 14</span>
+                    </td>
+
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour0 hour1"
+                        class="period-first-slot" title="08:00-09:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(L)&nbsp;LAB 14</span>
+                    </td>
+
+                    <td style="background-color: #A8FFFF" colspan="2" headers="weekday4 hour0 hour1"
+                        class="period-first-slot" title="08:00-09:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(T)&nbsp;EA5</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour1">8:30-9:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour1" class="period-middle-slot" title="08:00-09:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour1 hour2"
+                        class="period-middle-slot" title="08:00-09:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #A8FFFF" colspan="2" headers="weekday4 hour1 hour2"
+                        class="period-middle-slot" title="08:00-09:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 10, 12 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour2">9:00-9:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour2" class="period-last-slot" title="08:00-09:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540692&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=1fd423aa0a0e36064164affb3041d517086b2ac8"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour2 hour3"
+                        class="period-last-slot" title="08:00-09:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542601&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=6d9e2989f50eb1483547063b1918d436e3df0791"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #A8FFFF" colspan="2" headers="weekday4 hour2 hour3"
+                        class="period-last-slot" title="08:00-09:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540691&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=6f71c87dc1e68e1027c66c609d682c88c6a08a9c"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour3">9:30-10:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour3" class="period-first-slot" title="09:30-11:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(T)&nbsp;EA2</span>
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour3 hour4"
+                        class="period-first-slot" title="09:30-11:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(L)&nbsp;LAB 11</span>
+                    </td>
+                    <td style="background-color: #A8FFFF" headers="weekday4 hour3" class="period-first-slot" title="09:30-11:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(T)&nbsp;FA3</span>
+                    </td>
+                    <td style="background-color: #AFEEEE" headers="weekday4 hour3" class="period-first-slot" title="09:30-11:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(L)&nbsp;LAB 11</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour4">10:00-10:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour4" class="period-middle-slot" title="09:30-11:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour4 hour5"
+                        class="period-middle-slot" title="09:30-11:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #A8FFFF" headers="weekday4 hour4" class="period-middle-slot" title="09:30-11:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 10, 12 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #AFEEEE" headers="weekday4 hour4" class="period-middle-slot" title="09:30-11:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 10, 12 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour5">10:30-11:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour5" class="period-last-slot" title="09:30-11:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540691&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=6f71c87dc1e68e1027c66c609d682c88c6a08a9c"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour5 hour6"
+                        class="period-last-slot" title="09:30-11:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542598&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=e668cfa8e42a2b1d4e1b415b2bec0dcb0b164374"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #A8FFFF" headers="weekday4 hour5" class="period-last-slot" title="09:30-11:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542960&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=8c731a6f950876816aea8bdab54a2012de78a8fa"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #AFEEEE" headers="weekday4 hour5" class="period-last-slot" title="09:30-11:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542597&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=22aec85908856ff54ff55dad60ad1fc0062776fc"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour6">11:00-11:30</th>
+                    <td style="background-color: #00FFFF" headers="weekday0 hour6" class="period-first-slot" title="11:00-12:30
+2020-02-17
+2020-03-02
+2020-03-09
+2020-03-16
+2020-03-23
+2020-03-30
+2020-04-13
+2020-04-20
+2020-04-27
+2020-05-04
+2020-05-11
+2020-05-18
+2020-05-25"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/PPla8/2019-2020/2-semestre">PPla8</a>&nbsp;&nbsp;(T)&nbsp;E4</span>
+                    </td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour6" class="period-first-slot" title="11:00-12:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(L)&nbsp;LAB 10</span>
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday4 hour6 hour7"
+                        class="period-first-slot" title="11:00-12:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(L)&nbsp;LAB 14</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour7">11:30-12:00</th>
+                    <td style="background-color: #00FFFF" headers="weekday0 hour7" class="period-middle-slot" title="11:00-12:30
+2020-02-17
+2020-03-02
+2020-03-09
+2020-03-16
+2020-03-23
+2020-03-30
+2020-04-13
+2020-04-20
+2020-04-27
+2020-05-04
+2020-05-11
+2020-05-18
+2020-05-25"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour7" class="period-middle-slot" title="11:00-12:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday4 hour7 hour8"
+                        class="period-middle-slot" title="11:00-12:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 10, 12 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour8">12:00-12:30</th>
+                    <td style="background-color: #00FFFF" headers="weekday0 hour8" class="period-last-slot" title="11:00-12:30
+2020-02-17
+2020-03-02
+2020-03-09
+2020-03-16
+2020-03-23
+2020-03-30
+2020-04-13
+2020-04-20
+2020-04-27
+2020-05-04
+2020-05-11
+2020-05-18
+2020-05-25">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542962&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=8f3c4edf4e97a118377c2cae0f307ffe1e069ebb"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour8" class="period-last-slot" title="11:00-12:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540689&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=09f66410a59a91ee91135d3d5e1992a6eaa326d1"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday4 hour8 hour9"
+                        class="period-last-slot" title="11:00-12:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542600&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=9a9f6be10fbcf1754f9ea3a720ef98b7feeaf70b"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour9">12:30-13:00</th>
+                    <td style="background-color: #00FFFF" headers="weekday0 hour9" class="period-first-slot" title="12:30-14:00
+2020-02-17
+2020-03-02
+2020-03-09
+2020-03-16
+2020-03-23
+2020-03-30
+2020-04-13
+2020-04-20
+2020-04-27
+2020-05-04
+2020-05-11
+2020-05-18
+2020-05-25"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/PPla8/2019-2020/2-semestre">PPla8</a>&nbsp;&nbsp;(L)&nbsp;LAB 6</span>
+                    </td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour9" class="period-first-slot" title="12:30-14:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(L)&nbsp;LAB 7</span>
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour9 hour10"
+                        class="period-first-slot" title="12:30-14:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(T)&nbsp;FA1</span>
+                    </td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday4 hour9 hour10"
+                        class="period-first-slot" title="12:30-14:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(T)&nbsp;FA1</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour10">13:00-13:30</th>
+                    <td style="background-color: #00FFFF" headers="weekday0 hour10" class="period-middle-slot" title="12:30-14:00
+2020-02-17
+2020-03-02
+2020-03-09
+2020-03-16
+2020-03-23
+2020-03-30
+2020-04-13
+2020-04-20
+2020-04-27
+2020-05-04
+2020-05-11
+2020-05-18
+2020-05-25"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour10" class="period-middle-slot" title="12:30-14:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour10 hour11"
+                        class="period-middle-slot" title="12:30-14:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday4 hour10 hour11"
+                        class="period-middle-slot" title="12:30-14:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 10, 12 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour11">13:30-14:00</th>
+                    <td style="background-color: #00FFFF" headers="weekday0 hour11" class="period-last-slot" title="12:30-14:00
+2020-02-17
+2020-03-02
+2020-03-09
+2020-03-16
+2020-03-23
+2020-03-30
+2020-04-13
+2020-04-20
+2020-04-27
+2020-05-04
+2020-05-11
+2020-05-18
+2020-05-25">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542963&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=46dc95a3df4df0926ec740c732cfd826c032cd7b"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour11" class="period-last-slot" title="12:30-14:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540684&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=b23e50b61b241c63ff5a37fd27f29c226d270910"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour11 hour12"
+                        class="period-last-slot" title="12:30-14:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542604&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=1f90d293fa4985100308cbe32e68082f032d9a89"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday4 hour11 hour12"
+                        class="period-last-slot" title="12:30-14:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542604&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=1f90d293fa4985100308cbe32e68082f032d9a89"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour12">14:00-14:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #00FFFF" headers="weekday1 hour12" class="period-first-slot" title="14:00-15:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/PPla8/2019-2020/2-semestre">PPla8</a>&nbsp;&nbsp;(T)&nbsp;F4</span>
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" headers="weekday3 hour12" class="period-first-slot" title="14:00-15:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(L)&nbsp;LAB 11</span>
+                    </td>
+                    <td style="background-color: #87CEFA" headers="weekday3 hour12" class="period-first-slot" title="14:00-15:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/SRMan24/2019-2020/2-semestre">SRMan24</a>&nbsp;&nbsp;(L)&nbsp;1.1a &nbsp;LRI / 1.1b LCIP</span>
+                    </td>
+                    <td style="background-color: #87CEFA" colspan="2" headers="weekday4 hour12 hour13"
+                        class="period-first-slot" title="14:00-15:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/SRMan24/2019-2020/2-semestre">SRMan24</a>&nbsp;&nbsp;(T)&nbsp;F4</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour13">14:30-15:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #00FFFF" headers="weekday1 hour13" class="period-middle-slot" title="14:00-15:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #87CEFA" headers="weekday2 hour13" class="period-first-slot" title="14:30-16:00
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/SRMan24/2019-2020/2-semestre">SRMan24</a>&nbsp;&nbsp;(T)&nbsp;F2</span>
+                    </td>
+                    <td headers="weekday2 hour13" class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" headers="weekday3 hour13" class="period-middle-slot" title="14:00-15:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #87CEFA" headers="weekday3 hour13" class="period-middle-slot" title="14:00-15:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #87CEFA" colspan="2" headers="weekday4 hour13 hour14"
+                        class="period-middle-slot" title="14:00-15:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 10, 12 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour14">15:00-15:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #00FFFF" headers="weekday1 hour14" class="period-last-slot" title="14:00-15:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542962&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=8f3c4edf4e97a118377c2cae0f307ffe1e069ebb"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #87CEFA" headers="weekday2 hour14" class="period-middle-slot" title="14:30-16:00
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #A8FFFF" headers="weekday2 hour14" class="period-first-slot" title="15:00-16:30
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(L)&nbsp;LAB 10</span>
+                    </td>
+                    <td style="background-color: #AFEEEE" headers="weekday3 hour14" class="period-last-slot" title="14:00-15:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542959&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=13195ed079385bd5e26992beef329e33b3d2f658"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #87CEFA" headers="weekday3 hour14" class="period-last-slot" title="14:00-15:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540683&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=a7c0af5811c8a69e119f3251f5dee30ac2e6de57"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #87CEFA" colspan="2" headers="weekday4 hour14 hour15"
+                        class="period-last-slot" title="14:00-15:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540682&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=fcfb701e8beab96c95615ce86ac0905582ec6ca3"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour15">15:30-16:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #00FFFF" headers="weekday1 hour15" class="period-first-slot" title="15:30-17:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/PPla8/2019-2020/2-semestre">PPla8</a>&nbsp;&nbsp;(L)&nbsp;LAB 10</span>
+                    </td>
+                    <td style="background-color: #87CEFA" headers="weekday2 hour15" class="period-last-slot" title="14:30-16:00
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540682&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=fcfb701e8beab96c95615ce86ac0905582ec6ca3"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #A8FFFF" headers="weekday2 hour15" class="period-middle-slot" title="15:00-16:30
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour15 hour16"
+                        class="period-first-slot" title="15:30-17:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(L)&nbsp;LAB 14</span>
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour16">16:00-16:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #00FFFF" headers="weekday1 hour16" class="period-middle-slot" title="15:30-17:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td headers="weekday2 hour16" class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday2 hour16" class="period-last-slot" title="15:00-16:30
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540688&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=a14726b18e612c2740594201c3c132555f79ea82"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour16 hour17"
+                        class="period-middle-slot" title="15:30-17:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour17">16:30-17:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #00FFFF" headers="weekday1 hour17" class="period-last-slot" title="15:30-17:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542964&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=9dba8caf62a1637621f0511093f1e79c4622a0b3"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td style="background-color: #A8FFFF" colspan="2" headers="weekday2 hour17 hour18"
+                        class="period-first-slot" title="16:30-18:00
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(L)&nbsp;LAB 14</span>
+                    </td>
+                    <td style="background-color: #AFEEEE" colspan="2" headers="weekday3 hour17 hour18"
+                        class="period-last-slot" title="15:30-17:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=1128648685912922&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=15af9c38df3b4c5f1b10681f7e50bc6d1edddb5e"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour18">17:00-17:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour18" class="period-first-slot" title="17:00-18:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(T)&nbsp;FA1</span>
+                    </td>
+                    <td style="background-color: #A8FFFF" colspan="2" headers="weekday2 hour18 hour19"
+                        class="period-middle-slot" title="16:30-18:00
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour19">17:30-18:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour19" class="period-middle-slot" title="17:00-18:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #A8FFFF" colspan="2" headers="weekday2 hour19 hour20"
+                        class="period-last-slot" title="16:30-18:00
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732540685&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=d4e9f8cf6576a437da048406af634a61c0ad977c"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour20">18:00-18:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour20" class="period-last-slot" title="17:00-18:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542960&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=8c731a6f950876816aea8bdab54a2012de78a8fa"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour21">18:30-19:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour21" class="period-first-slot" title="18:30-20:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(L)&nbsp;LAB 10</span>
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour22">19:00-19:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour22" class="period-middle-slot" title="18:30-20:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour23">19:30-20:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour23" class="period-last-slot" title="18:30-20:00
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542961&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=a76653fbb706d450ef8b6929ec289f5f052fff2d"><img
+                                src="/images/add1.gif" title="Adicionar" "=""></a></td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot" colspan="2">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+            <br><b>Legenda:</b><br><br>
+            <table cellpadding="0" cellspacing="0" style="margin-left:5px">
+                <tbody>
+                <tr>
+                    <td width="60"><b>AASMA264</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Agentes Autónomos e Sistemas Multi-Agente</td>
+                    <td width="60"><b>Apre24</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Aprendizagem</td>
+                </tr>
+                <tr>
+                    <td width="60"><b>PPla8</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Procura e Planeamento</td>
+                    <td width="60"><b>SRMan24</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Sistemas Robóticos em Manipulação</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top"><b>[Q]</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Identifica uma aula como sendo quinzenal</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <p class="mtop3"><strong>O seu horário actual:</strong></p>
+
+
+            <table class="timetable" cellspacing="0" cellpadding="0" width="90%">
+                <tbody>
+                <tr>
+                    <th>Horas/Dias</th>
+                    <th colspan="1" width="14%" id="weekday0">
+                        Segunda
+                    </th>
+                    <th colspan="1" width="14%" id="weekday1">
+                        Terça
+                    </th>
+                    <th colspan="1" width="14%" id="weekday2">
+                        Quarta
+                    </th>
+                    <th colspan="1" width="14%" id="weekday3">
+                        Quinta
+                    </th>
+                    <th colspan="1" width="14%" id="weekday4">
+                        Sexta
+                    </th>
+                    <th colspan="1" width="14%" id="weekday5">
+                        Sábado
+                    </th>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour0">9:00-9:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour1">9:30-10:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday4 hour1" class="period-first-slot" title="09:30-11:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(T)&nbsp;FA3</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour2">10:00-10:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday4 hour2" class="period-middle-slot" title="09:30-11:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 10, 12 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour3">10:30-11:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday4 hour3" class="period-last-slot" title="09:30-11:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732542960&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=c16a552b98c0b7eed25b56190a514781a05b1ecc"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour4">11:00-11:30</th>
+                    <td style="background-color: #AFEEEE" headers="weekday0 hour4" class="period-first-slot" title="11:00-12:30
+2020-02-17
+2020-03-02
+2020-03-09
+2020-03-16
+2020-03-23
+2020-03-30
+2020-04-13
+2020-04-20
+2020-04-27
+2020-05-04
+2020-05-11
+2020-05-18
+2020-05-25"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/PPla8/2019-2020/2-semestre">PPla8</a>&nbsp;&nbsp;(T)&nbsp;E4</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour5">11:30-12:00</th>
+                    <td style="background-color: #AFEEEE" headers="weekday0 hour5" class="period-middle-slot" title="11:00-12:30
+2020-02-17
+2020-03-02
+2020-03-09
+2020-03-16
+2020-03-23
+2020-03-30
+2020-04-13
+2020-04-20
+2020-04-27
+2020-05-04
+2020-05-11
+2020-05-18
+2020-05-25"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour6">12:00-12:30</th>
+                    <td style="background-color: #AFEEEE" headers="weekday0 hour6" class="period-last-slot" title="11:00-12:30
+2020-02-17
+2020-03-02
+2020-03-09
+2020-03-16
+2020-03-23
+2020-03-30
+2020-04-13
+2020-04-20
+2020-04-27
+2020-05-04
+2020-05-11
+2020-05-18
+2020-05-25">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732542962&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=024de7916cf91a7433a77cdb18b156bf39fae331"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour7">12:30-13:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #00FFFF" headers="weekday3 hour7" class="period-first-slot" title="12:30-14:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(T)&nbsp;FA1</span>
+                    </td>
+                    <td style="background-color: #00FFFF" headers="weekday4 hour7" class="period-first-slot" title="12:30-14:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/AASMA264/2019-2020/2-semestre">AASMA264</a>&nbsp;&nbsp;(T)&nbsp;FA1</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour8">13:00-13:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #00FFFF" headers="weekday3 hour8" class="period-middle-slot" title="12:30-14:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #00FFFF" headers="weekday4 hour8" class="period-middle-slot" title="12:30-14:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 10, 12 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour9">13:30-14:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #00FFFF" headers="weekday3 hour9" class="period-last-slot" title="12:30-14:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732542604&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=068954bbbf3f11af7decdf4cfd1f7407a7030dd6"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td style="background-color: #00FFFF" headers="weekday4 hour9" class="period-last-slot" title="12:30-14:00
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732542604&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=068954bbbf3f11af7decdf4cfd1f7407a7030dd6"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour10">14:00-14:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" headers="weekday1 hour10" class="period-first-slot" title="14:00-15:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/PPla8/2019-2020/2-semestre">PPla8</a>&nbsp;&nbsp;(T)&nbsp;F4</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #87CEFA" headers="weekday3 hour10" class="period-first-slot" title="14:00-15:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/SRMan24/2019-2020/2-semestre">SRMan24</a>&nbsp;&nbsp;(L)&nbsp;1.1a &nbsp;LRI / 1.1b LCIP</span>
+                    </td>
+                    <td style="background-color: #87CEFA" headers="weekday4 hour10" class="period-first-slot" title="14:00-15:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/SRMan24/2019-2020/2-semestre">SRMan24</a>&nbsp;&nbsp;(T)&nbsp;F4</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour11">14:30-15:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" headers="weekday1 hour11" class="period-middle-slot" title="14:00-15:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #87CEFA" headers="weekday2 hour11" class="period-first-slot" title="14:30-16:00
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/SRMan24/2019-2020/2-semestre">SRMan24</a>&nbsp;&nbsp;(T)&nbsp;F2</span>
+                    </td>
+                    <td style="background-color: #87CEFA" headers="weekday3 hour11" class="period-middle-slot" title="14:00-15:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #87CEFA" headers="weekday4 hour11" class="period-middle-slot" title="14:00-15:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 10, 12 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour12">15:00-15:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #AFEEEE" headers="weekday1 hour12" class="period-last-slot" title="14:00-15:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732542962&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=024de7916cf91a7433a77cdb18b156bf39fae331"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td style="background-color: #87CEFA" headers="weekday2 hour12" class="period-middle-slot" title="14:30-16:00
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td style="background-color: #87CEFA" headers="weekday3 hour12" class="period-last-slot" title="14:00-15:30
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732540683&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=ae2c5868ed98ca6fbb602672d0851797c0b4cb85"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td style="background-color: #87CEFA" headers="weekday4 hour12" class="period-last-slot" title="14:00-15:30
+2020-02-21
+2020-02-28
+2020-03-06
+2020-03-13
+2020-03-20
+2020-03-27
+2020-04-03
+2020-04-17
+2020-04-24
+2020-05-08
+2020-05-15
+2020-05-22
+2020-05-29">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732540682&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=a9c0178b30e3d28fbf39972300975344178906ca"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour13">15:30-16:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #87CEFA" headers="weekday2 hour13" class="period-last-slot" title="14:30-16:00
+2020-02-19
+2020-02-26
+2020-03-04
+2020-03-11
+2020-03-18
+2020-03-25
+2020-04-01
+2020-04-15
+2020-04-22
+2020-04-29
+2020-05-06
+2020-05-13
+2020-05-20
+2020-05-27">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732540682&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=a9c0178b30e3d28fbf39972300975344178906ca"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour14">16:00-16:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8D4FF" headers="weekday3 hour14" class="period-first-slot" title="16:00-18:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/PPes12/2019-2020/2-semestre">PPes12</a>&nbsp;&nbsp;(S)&nbsp;PA1</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour15">16:30-17:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8D4FF" headers="weekday3 hour15" class="period-middle-slot" title="16:00-18:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28"><span>Semanas: &nbsp;&nbsp;1 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour16">17:00-17:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour16" class="period-first-slot" title="17:00-18:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span class="float-left"><!-- NO_CHECKSUM --><a
+                            href="https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre">Apre24</a>&nbsp;&nbsp;(T)&nbsp;FA1</span>
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8D4FF" headers="weekday3 hour16" class="period-middle-slot" title="16:00-18:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour17">17:30-18:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour17" class="period-middle-slot" title="17:00-18:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26"><span>Semanas: &nbsp;&nbsp;1, 3 - 7, 9 - 15&nbsp;</span>&nbsp;
+                    </td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8D4FF" headers="weekday3 hour17" class="period-last-slot" title="16:00-18:00
+2020-02-20
+2020-02-27
+2020-03-05
+2020-03-12
+2020-03-19
+2020-03-26
+2020-04-02
+2020-04-16
+2020-04-23
+2020-04-30
+2020-05-07
+2020-05-14
+2020-05-21
+2020-05-28">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732542947&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=e1379c65344b4ff94ceac1f0f99f1902c9228409"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour18">18:00-18:30</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td style="background-color: #A8FFFF" headers="weekday1 hour18" class="period-last-slot" title="17:00-18:30
+2020-02-18
+2020-03-03
+2020-03-10
+2020-03-17
+2020-03-24
+2020-03-31
+2020-04-14
+2020-04-21
+2020-04-28
+2020-05-05
+2020-05-12
+2020-05-19
+2020-05-26">
+                        <a href="/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&amp;registrationOID=1128159059642752&amp;shiftId=565698732542960&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=c16a552b98c0b7eed25b56190a514781a05b1ecc"><img
+                                src="/images/remove1.gif" title="Remover" "=""></a></td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th class="period-hours" id="hour19">18:30-19:00</th>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                    <td class="period-empty-slot">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+            <br><b>Legenda:</b><br><br>
+            <table cellpadding="0" cellspacing="0" style="margin-left:5px">
+                <tbody>
+                <tr>
+                    <td width="60"><b>AASMA264</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Agentes Autónomos e Sistemas Multi-Agente</td>
+                    <td width="60"><b>Apre24</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Aprendizagem</td>
+                </tr>
+                <tr>
+                    <td width="60"><b>PPes12</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Portfolio Pessoal 2</td>
+                    <td width="60"><b>PPla8</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Procura e Planeamento</td>
+                </tr>
+                <tr>
+                    <td width="60"><b>SRMan24</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Sistemas Robóticos em Manipulação</td>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top"><b>[Q]</b></td>
+                    <td style="vertical-align:top">-</td>
+                    <td>Identifica uma aula como sendo quinzenal</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <br>
+            <ul>
+                <li>
+                    <a href="/student/studentShiftEnrollmentManager.do?method=start&amp;registrationOID=1128159059642752&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=03fe4e243691f045dae58f1df2569dfd75ba4b04"><strong>Concluir</strong></a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="col-md-2">
+            <div class="jumbotron" style="padding-left: 20px; padding-right: 20px">
+
+
+                <h4 class="text-center">Turmas</h4>
+
+
+                <ul class="nav nav-pills nav-stacked">
+
+                    <li class="active">
+
+
+                        <a href="/student/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&amp;registrationOID=1128159059642752&amp;classId=565264940800718&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=b100f5a9d5f760f6ef74f52b9fc794988137e983">Turma&nbsp;MEIC-A0101</a>
+
+                    </li>
+
+                    <li class="">
+
+
+                        <a href="/student/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment&amp;registrationOID=1128159059642752&amp;classId=565264940800719&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=5c89dafb6e01bc239cc6088943d2c08539a90918">Turma&nbsp;MEIC-A0201</a>
+
+                    </li>
+
+                    <br>
+                </ul>
+
+                <div class="text-center">
+                    <a href="/student/studentShiftEnrollmentManager.do?method=start&amp;registrationOID=1128159059642752&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=03fe4e243691f045dae58f1df2569dfd75ba4b04"
+                       class="btn btn-default">« Voltar</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+
+<script>
+    $.ajax({
+        crossOrigin: true,
+        url: "https://fenix.tecnico.ulisboa.pt/api/fenix/v1/academicterms",
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            var academicTerms = Object.keys(JSON.parse(data)).sort().reverse().slice(0, 5);
+
+            var dict = JSON.parse(data);
+
+            var x = document.getElementById("academicTerms");
+            for (academicTerm of academicTerms) {
+                for (var sem of dict[academicTerm]) {
+                    var option = document.createElement("option");
+                    option.text = sem;
+                    option.value = academicTerm;
+                    x.add(option);
+                }
+            }
+        }
+    });
+
+    function getDegrees() {
+        const academicTerm = $("#academicTerms option:selected").val();
+
+        function compare(a, b) {
+            if (a.acronym < b.acronym) {
+                return -1;
+            }
+            if (a.acronym > b.acronym) {
+                return 1;
+            }
+            return 0;
+        }
+
+        $.ajax({
+            crossOrigin: true,
+            url: "https://fenix.tecnico.ulisboa.pt/api/fenix/v1/degrees?academicTerm=" + academicTerm,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var degrees = JSON.parse(data).sort(compare);
+
+                var x = document.getElementById("degrees");
+                var degree;
+                for (degree of degrees) {
+                    var option = document.createElement("option");
+                    option.text = '(' + degree.acronym + ') ' + degree.name;
+                    option.value = degree.id;
+                    x.add(option);
+                }
+            }
+        });
+    }
+
+    function getCourses() {
+        const academicTerm = $("#academicTerms option:selected").val();
+        const degree = $("#degrees option:selected").val();
+
+        function compare(a, b) {
+            if (a.acronym < b.acronym) {
+                return -1;
+            }
+            if (a.acronym > b.acronym) {
+                return 1;
+            }
+            return 0;
+        }
+
+        function checkCourse(course) {
+            var choosenAcademicTerm = $("#academicTerms option:selected").text().replace(/ /g, '');
+            const correctAcademicTerm = course.academicTerm.replace(/ /g, '') === choosenAcademicTerm;
+            const validCourse = course.credits !== "0.0" && course.credits !== "12.0" && course.credits !== "30.0"
+            return correctAcademicTerm && validCourse;
+        }
+
+        $.ajax({
+            crossOrigin: true,
+            url: "https://fenix.tecnico.ulisboa.pt/api/fenix/v1/degrees/" + degree + "/courses?academicTerm=" + academicTerm,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var courses = JSON.parse(data).sort(compare).filter(checkCourse);
+
+                var x = document.getElementById("courses");
+                var course;
+                for (course of courses) {
+                    var option = document.createElement("option");
+                    option.text = '(' + course.acronym + ') ' + course.name;
+                    option.value = course.id + "&&" + course.acronym;
+                    x.add(option);
+                }
+            }
+        });
+    }
+
+    function getSchedules() {
+        const courses = $("#courses").val();
+
+        for (var course of courses) {
+            const aux = course.split("&&");
+            const courseID = aux[0];
+            const courseAcronym = aux[1];
+            $.ajax({
+                crossOrigin: true,
+                url: "https://fenix.tecnico.ulisboa.pt/api/fenix/v1/courses/" + courseID + "/schedule",
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    var schedule = JSON.parse(data);
+                    console.log(schedule);
+                    var shifts = schedule.shifts;
+                    for (shift of shifts) {
+                        var lessons = shift.lessons;
+                        var uniqueLessons = [];
+                        for (lesson of lessons) {
+                            const start = new Date(lesson.start);
+                            const hours = ("0" + start.getHours()).slice(-2);
+                            const minutes = ("0" + start.getMinutes()).slice(-2);
+                            const time = "" + hours + ":" + minutes;
+                            if (!uniqueLessons.includes(time)) {
+                                uniqueLessons.push(time);
+                                addLessonToTable(start, new Date(lesson.end), shift.types[0], courseAcronym, lesson.room.name);
+                            }
+                        }
+                        console.log("Shift lessons: " + uniqueLessons);
+                    }
+                }
+            });
+        }
+
+    }
+
+    function addLessonToTable(start, end, type, courseName, room) {
+        const weekDay = start.getDay();
+        var typeChar = "(T)";
+        if (type === "LABORATORIAL") {
+            typeChar = "(L)";
+        }
+
+        $("#allTimesTable .period-hours").each(function () {
+            const period = $(this).text().split("-");
+
+            const periodStart = new Date(start);
+            periodStart.setHours(parseInt(period[0].split(":")[0]));
+            periodStart.setMinutes(parseInt(period[0].split(":")[1]));
+
+            const periodEnd = new Date(end);
+            periodEnd.setHours(parseInt(period[1].split(":")[0]));
+            periodEnd.setMinutes(parseInt(period[1].split(":")[1]));
+
+            if (start.getTime() === periodStart.getTime()) {
+                $("~ td:nth-child("+weekDay+")", this).first().replaceWith("" +
+                    "<td style=\"background-color: #A8FFFF\" headers=\"weekday1 hour0\" class=\"period-first-slot\">\n" +
+                    "                        <span class=\"float-left\"><!-- NO_CHECKSUM -->\n" +
+                    "                            <a href=\"https://fenix.tecnico.ulisboa.pt/disciplinas/Apre24/2019-2020/2-semestre\">" + courseName + "</a>&nbsp;&nbsp;" + typeChar + "&nbsp;" + room + "</span>\n" +
+                    "                    </td>");
+                //console.log(start <= periodStart, start <= periodEnd, end >= periodEnd);
+            }
+            else if (start < periodStart && end > periodEnd) {
+                $("~ td:nth-child("+weekDay+")", this).first().replaceWith("<td style=\"background-color: #A8FFFF\" headers=\"weekday1 hour1\" class=\"period-middle-slot\"><span></span>&nbsp;</td>");
+                //console.log(start <= periodStart, start <= periodEnd, end <= periodEnd);
+            }
+            else if (end.getTime() === periodEnd.getTime()) {
+                $("~ td:nth-child("+weekDay+")", this).first().replaceWith("<td style=\"background-color: #A8FFFF\" headers=\"weekday1 hour23\" class=\"period-last-slot\">\n" +
+                    "                        <a href=\"/student/enrollStudentInShifts.do?registrationOID=1128159059642752&amp;shiftId=565698732542961&amp;classId=565264940800718&amp;executionCourseID=&amp;executionSemesterID=1411231764185090&amp;_request_checksum_=a76653fbb706d450ef8b6929ec289f5f052fff2d\"><img\n" +
+                    "                                src=\"/images/add1.gif\" title=\"Adicionar\" \"=\"\"></a></td>");
+                //console.log(start <= periodStart, start <= periodEnd, end >= periodEnd);
+            }
+        });
+        alert("added");
+        console.log("Lesson added ", start, end);
+    }
+</script>
+
+</html>
